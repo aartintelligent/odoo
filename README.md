@@ -1,2 +1,2 @@
-# LMDV ODOO
+# ODOO
 
