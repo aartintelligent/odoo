@@ -1,0 +1,28 @@
+services:
+
+  postgresql:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${DB_USER:-admin}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+  web:
+    build:
+      context: .
+    environment:
+      - DB_HOST=${DB_HOST:-postgresql}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USER=${DB_USER:-admin}
+      - DB_PASSWORD=${DB_PASSWORD:-password}
+    volumes:
+      - ./odoo/addons:/mnt/odoo-addons:rw,delegated
+      - odoo-data:/var/lib/odoo
+    ports:
+      - 8069:8069
+
+volumes:
+  postgres-data:
+  odoo-data:
