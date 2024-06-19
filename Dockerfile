@@ -6,11 +6,13 @@ USER root
 
 COPY odoo/odoo.conf /etc/odoo/odoo.conf
 
-COPY odoo/addons /mnt/extra-addons
+COPY odoo/enterprise /mnt/enterprise
+
+COPY odoo/odoo-addons /mnt/extra-addons
 
 COPY odoo/wait-for-psql.py /usr/local/bin/
 
-RUN chmod +x /usr/local/bin//wait-for-psql.py
+RUN chmod +x /usr/local/bin/wait-for-psql.py
 
 COPY odoo/entrypoint.sh /entrypoint.sh
 

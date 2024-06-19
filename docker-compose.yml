@@ -18,10 +18,20 @@ services:
       - DB_USER=${DB_USER:-admin}
       - DB_PASSWORD=${DB_PASSWORD:-password}
     volumes:
-      - ./odoo/addons:/mnt/odoo-addons:rw,delegated
+      - ./odoo/enterprise:/mnt/enterprise:rw,delegated
+      - ./odoo/odoo-addons:/mnt/odoo-addons:rw,delegated
       - odoo-data:/var/lib/odoo
+    depends_on:
+      - postgresql
+
+  proxy:
+    image: nginx
+    volumes:
+      - ./odoo/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 8069:8069
+      - 80:80
+    depends_on:
+      - web
 
 volumes:
   postgres-data:
